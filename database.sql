@@ -68,3 +68,11 @@ CREATE TABLE subjects_teachers (
   FOREIGN KEY (subject_id) REFERENCES subjects(subject_id) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (teacher_id) REFERENCES teachers(teacher_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+CREATE TABLE administrator (
+  admin_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  adminName VARCHAR(100),
+  adminSurname VARCHAR(100),
+  adminEmail VARCHAR(150),
+  adminPwd VARCHAR(250)
+);
