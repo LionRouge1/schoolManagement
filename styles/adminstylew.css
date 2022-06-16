@@ -1,0 +1,206 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,900&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+*{
+  font-family: 'Roboto', sans-serif;
+}
+
+section{
+	width: 100%;
+	height:auto;
+	display: block;
+	margin-top: 5%;
+	padding-bottom: 20px;
+	z-index: 0;
+	text-align: center;
+}
+table{
+	width: 100%;
+	font-size: 18px;
+	border: 2px solid #040E27;
+}
+.table-striped{
+	overflow-x: auto;
+}
+tr,td{
+	padding: 10px;
+}
+.entete{
+	background-color: rgba(0, 0, 30, 0.5);
+	color: white;
+	font-size: 20px;
+	font-weight: bold;
+}
+.entete th{
+	color: #fff;
+}
+
+.popup{
+	display: none;
+	position: fixed;
+	z-index: 100;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	overflow: auto;
+	background-color: rgba(32.5,35.4,41.7,0.6);
+	padding-top: 50px;
+}
+
+.line span {
+	margin:0 10px 10px  10px;
+}
+.closespr {
+  position: absolute;
+  right: 35px;
+  top: 15px;
+  font-size: 40px;
+  font-weight: bold;
+  color: #f1f1f1;
+}
+
+.closespr:hover,
+.closespr:focus {
+  color: #f44336;
+  cursor: pointer;
+}
+
+.line >p{
+	display: inline-block;
+	width: 25%;
+	float: left;
+	margin-right: 10%;
+}
+/* Set a style for all buttons */
+.clearfix button {
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  opacity: 0.9;
+}
+
+.clearfix button:hover {
+  opacity:1;
+}
+
+/* Float cancel and delete buttons and add an equal width */
+.cancelbtn, .deletebtn {
+  float: left;
+  width: 50%;
+}
+
+/* Add a color to the cancel button */
+.cancelbtn {
+  background-color: #ccc;
+  color: black;
+}
+
+/* Add a color to the delete button */
+.deletebtn {
+  background-color: #f44336;
+}
+
+/* Add padding and center-align text to the container */
+.container {
+  padding: 16px;
+  text-align: center;
+}
+.delete{
+	cursor: pointer;
+}
+
+/* Modal Content/Box */
+.popup .modal1-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 60%; 
+}
+
+/* Style the horizontal ruler */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* The Modal Close Button (x) */
+.closespr {
+  position: absolute;
+  right: 35px;
+  top: 15px;
+  font-size: 40px;
+  font-weight: bold;
+  color: #f1f1f1;
+}
+
+.closespr:hover,
+.closespr:focus {
+  color: #f44336;
+  cursor: pointer;
+}
+
+/* Clear floats */
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.alerted{
+	width: 400px;
+	height: 20px;
+	padding: 20px;
+	background-color: #04AA6D;
+	color: white;
+	opacity: 0;
+	border-radius: 10px;
+	position: absolute;
+	transform: translateX(100%);
+	animation: apparu 2s ease forwards;
+	animation-timing-function: ease-in-out;
+}
+.alerted::after{
+	content: "";
+	position: absolute;
+	top: -50%;
+	left: 80%;
+	margin-left: 15px;
+	border-width: 15px;
+	border-style: solid;
+	border-color: transparent transparent #04AA6D transparent;
+}
+.closebtn {
+	position: relative;
+	font-weight: bold;
+	width: 40px;
+	height: 40px;
+	top: -10px;
+	left: -10px;
+	border:3px solid #ff9800;
+	border-radius: 50%;
+	color: white;
+	float: right;
+	font-size: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	opacity: 0.9;
+	transition-duration: 0.6s;
+	transition-property: color;
+}
+.closebtn:hover{
+	opacity: 1;
+	color: red;
+}
+@keyframes apparu {
+	0%{opacity: 0.8; transform: translateX(100%);}
+	90%{opacity: 1; transform: translateX(3%);}
+	92%{opacity: 1; transform: translateX(4%);}
+	95%{opacity: 1; transform: translateX(5%);}
+	98%{opacity: 1; transform: translateX(2%);}
+	100%{opacity: 1; transform: translateX(0%);}
+}

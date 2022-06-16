@@ -1,0 +1,36 @@
+.alert{
+  width: 100%;
+  height: 40px;
+  text-align: center;
+  font-size: 16px;
+  padding: 10px;
+  margin: 10px 0;
+  opacity: 0.8;
+  font-style: italic;
+}
+
+.alert-success{
+  color: white;
+  background-color: #81c784;
+}
+
+.alert-danger{
+  color: white;
+  background-color: #f44336;
+}
+
+.back {
+  text-decoration: none;
+  text-align: center;
+  font-weight: 400;
+  font-size: 18px;
+  display: block;
+  height: 40px;
+  border: 1px solid slateblue;
+  padding: 8px;
+  border-radius: 5px;
+  position: relative;
+  left: 10%;
+  bottom: 20%;
+  width: 130px;
+}

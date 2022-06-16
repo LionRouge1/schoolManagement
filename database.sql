@@ -7,6 +7,7 @@ CREATE TABLE locations (
 
 CREATE TABLE teachers (
   teacher_id INT NOT NULL AUTO_INCREMENT,
+  avatar VARCHAR(10),
   tchName VARCHAR(100),
   tchSurname VARCHAR(100),
   schoolName VARCHAR(150),
@@ -48,6 +49,8 @@ CREATE TABLE rating (
   teacher_id INT,
   rate INT,
   RDate DATE,
+  comments VARCHAR(250),
+  user_id INT REFERENCES users(user_id),
   PRIMARY KEY(rate_id),
   FOREIGN KEY (teacher_id) REFERENCES teachers(teacher_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -75,4 +78,22 @@ CREATE TABLE administrator (
   adminSurname VARCHAR(100),
   adminEmail VARCHAR(150),
   adminPwd VARCHAR(250)
+);
+
+CREATE TABLE categories (
+  category_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  category VARCHAR(150)
+);
+
+ALTER TABLE subjects
+ADD CONSTRAINT FK_categories
+FOREIGN KEY (category_id)
+REFERENCES categories(category_id) ON DELETE CASCADE ON UPDATE CASCADE;
+
+CREATE TABLE uers_categories (
+  id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  user_id INT,
+  category_id INT,
+  FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY(category_id) REFERENCES categories(category_id) ON DELETE CASCADE ON UPDATE CASCADE
 );

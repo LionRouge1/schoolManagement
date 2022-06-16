@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteRule ^inc/.*$ 404.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ 404.php [QSA,L]
