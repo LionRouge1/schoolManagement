@@ -46,7 +46,7 @@ require 'modules/Display.php';
     'Gender',
     'Region',
     'City');
-    $teacher = $teachers->displayelement($sql, $heads);
+    $teacher = $teachers->displayelement($sql, $heads, 'query');
     ?>
 
     <a href="adminprofil.php?id=1" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Change admin password</a>

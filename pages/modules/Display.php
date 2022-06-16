@@ -10,11 +10,20 @@ class Display
     $this->permission = $permission;
   }
 
-  public function displayelement($sql, $heads)
+  public function displayelement($sql, $heads, $type, $id='')
   {
+    switch ($type) {
+      case 'query':
+        $utilisateur = $this->bdd->query($sql);
+        $user = $utilisateur->fetch();
+        break;
+      case 'prepare':
+        $utilisateur = $this->bdd->prepare($sql);
+        $utilisateur->execute(array($id));
+        $user = $utilisateur->fetch();
+        break;
+    }
 
-    $utilisateur = $this->bdd->query($sql);
-    $user = $utilisateur->fetch();
 ?>
     <div class="table-striped">
       <table class="table">
@@ -41,16 +50,16 @@ class Display
             <?php
             }
             ?>
-            <?php if($this->permission): ?>
-            <td><a type="submit" name="submit" href="userprofil.php?id=<?= $check ?>">Profile</a></td>
-            <td>
-              <p class="delete" onclick="deleteft(<?= $check ?>,'<?= $user['Name'] . ' ' . $user['Surname']; ?>')" data-bs-toggle="modal" data-bs-target="#id01"><strong class="strong" title="Supprimer">&times</strong> <span class="dltxt">Delete</span></p>
-            </td>
+            <?php if ($this->permission) : ?>
+              <td><a type="submit" name="submit" href="userprofil.php?id=<?= $check ?>">Profile</a></td>
+              <td>
+                <p class="delete" onclick="deleteft(<?= $check ?>,'<?= $user['Name'] . ' ' . $user['Surname']; ?>')" data-bs-toggle="modal" data-bs-target="#id01"><strong class="strong" title="Supprimer">&times</strong> <span class="dltxt">Delete</span></p>
+              </td>
           </tr>
-          <?php endif;?>
-        <?php
+        <?php endif; ?>
+      <?php
         } while ($user = $utilisateur->fetch())
-        ?>
+      ?>
       </table>
     </div>
   <?php
@@ -126,5 +135,4 @@ class Display
     ?>
 <?php
   }
-
 }

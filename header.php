@@ -15,7 +15,7 @@
       </li>
     </ul>
     <form class="d-flex">
-        <input class="form-control me-2" type="text" placeholder="Search">
+        <input class="form-control me-2" id="search" onkeyup="tableFilter()" type="text" placeholder="Search">
         <button class="btn btn-primary" type="button">Search</button>
       </form>
     <a href="../deconnexion.php" class="btn btn-primary pr-0" >Log out</a>

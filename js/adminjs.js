@@ -15,12 +15,12 @@ function deleteft(delet,name){
 }
 }
 
-function myFunction() {
+function tableFilter() {
   // Declare variables
   var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("myInput");
+  input = document.getElementById("search");
   filter = input.value.toUpperCase();
-  table = document.getElementById("myTable");
+  table = document.querySelector(".table");
   tr = table.getElementsByTagName("tr");
 
   // Loop through all table rows, and hide those who don't match the search query
