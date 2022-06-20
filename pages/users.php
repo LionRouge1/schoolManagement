@@ -105,6 +105,6 @@ $who = $_SESSION['who'];
   
   ?>
   <script src="../js/adminjs.js"></script>
+  <script src="../js/filtring.js"></script>
 </body>
-
 </html>

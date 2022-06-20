@@ -46,7 +46,7 @@
               <option value="city">City</option>
               <option value="subject">Subject</option>
             </select>
-            <input class="form-control me-2" name="by" id="search" onclick="showFilter()" type="text" placeholder="Search by..." required>
+            <input class="form-control me-2" name="by" id="search" type="text" placeholder="Search by..." required>
             <button type="submit" class="btn btn-primary" type="button">Search</button>
           </form>
         <?php else : ?>
