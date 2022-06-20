@@ -5,8 +5,19 @@ if (!isset($_SESSION['who'])) {
   die();
 }
 $who = $_SESSION['who'];
+$id = $_SESSION['id'];
+$pagebook = true;
+
+
 require_once '../config.php';
 require '../pages/modules/Books.php';
+
+$sql1 = 'SELECT * FROM teachers where teacher_id = ?';
+$connexion = $bdd->prepare($sql1);
+
+$connexion->execute(array($id));
+$teacher = $connexion->fetch();
+$avatar = $teacher['avatar'];
 
 $about = new Books($bdd);
 ?>
@@ -16,59 +27,54 @@ $about = new Books($bdd);
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="../pages/css/admin1.css">
+  <link rel="stylesheet" href="../pages/css/adminstylew.css">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   <title>Bookstore</title>
 </head>
 
 <body>
-  <header>
-    <div class="logo">
-      <p>Bookstore</p>
-    </div>
-    <ul class="navbar">
-      <li><a href="#" id="list-link" class="links active">List</a></li>
-      <?php if ($who == 'admin') ?> <li><a href="#" id="add-link" class="links">Add book</a></li>
-      <li><a href="javascript:history.go(-1)" class="link">
-          <-Go back</a>
-      </li>
-    </ul>
-  </header>
+  <?php
+  if ($who == 'admin'){
+    include '../header.php';
+  } else {
+    include '../pages/header.php';
+  }
+  ?>
   <main>
-    <!-- Header Section -->
-
-
-
-    <!-- List Section -->
-    <section class="books_container" id="list">
-      <h1>Awesome books</h1>
-      <div>
-        <table class="books_table">
-          <thead>
-            <tr class="line_hd">
-              <th>Title</th>
-              <th>Author</th>
-              <th>action</th>
+    <?php if($who == 'admin'):?> <button class="btn btn-primary btnadd" data-bs-toggle="modal" data-bs-target="#addBook">Add</button><?php endif?>
+    <div class="table-striped">
+      <table class="table">
+            <tr class="entete">
+              <th>Ebook</th>
+              <th>file</th>
+             <?php if($who == 'admin'): ?>  <th>action</th><?php endif?>
             </tr>
-          </thead>
           <!--- List of all the books -->
           <?php
-          $books = $about->display();
+          $books = $about->display($who);
           ?>
         </table>
       </div>
-    </section>
 
-    <section id="add_book">
-      <h2>Add a new book</h2>
-      <div class="add-new section hidden">
-        <form action="" method="post" id="book-form">
-          <input type="text" id="title" name="title" class="text-inpute" placeholder="Book title..." />
-          <input type="text" id="author" name="author" class="text-inpute" placeholder="Book's author..." />
-          <button type="submit" id="button">Add</button>
-        </form>
-        <span id="error"></span>
+      <div id="addBook" class="modal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <form action="delete.php" method="post" class="m-4">
+              <div class="m-2">
+              <input type="text" id="title" name="title" class="text-inpute" placeholder="Ebook title..." required/>
+              </div>
+              <div class="m-2">
+              <input type="file" id="file" name="file" class="text-inpute" required/>
+              </div>
+              <button type="submit" class="btn btn-primary" id="button">Add</button>
+            </form>
+            <span id="error"></span>
+          </div>
+        </div>
       </div>
-    </section>
     <?php
       if(isset($_POST['title']) && !empty($_POST['title']) && isset($_POST['author']) && !empty($_POST['author']))
       {
@@ -76,12 +82,8 @@ $about = new Books($bdd);
       }
     ?>
 
-    <!-- Footer Section -->
-    <footer>
-      <p>Copyright: All rights reserved</p>
-    </footer>
   </main>
-  <script src="js/main.js"></script>
+  <script src="../js/adminjs.js"></script>
 </body>
 
 </html>

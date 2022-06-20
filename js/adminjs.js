@@ -36,3 +36,48 @@ function tableFilter() {
     }
   }
 }
+
+
+const links = document.querySelectorAll('.link');
+
+function showBlock(e) {
+  const teachers = document.getElementById('teachers');
+  const users = document.getElementById('users');
+  switch (e) {
+    case 'teachers-link':
+      teachers.style.display = 'block';
+      users.style.display = 'none';
+      break;
+
+    case 'users-link':
+      users.style.display = 'block';
+      teachers.style.display = 'none';
+      break;
+
+    default:
+      teachers.style.display = 'block';
+      users.style.display = 'none';
+      break;
+  }
+}
+
+links.forEach((element) => {
+  element.addEventListener('click', (e) => {
+    showBlock(element.id);
+    const [current] = document.getElementsByClassName('active');
+    current.className = current.className.replace(' active', '');
+    e.target.className += ' active';
+  });
+});
+
+
+
+// Rating codes
+
+function rates(id, tid) {
+  
+  const box = document.getElementById(id);
+  const parent = box.parentNode;
+  parent.parentElement.querySelector('.rateValue').innerHTML = box.value;
+  
+};

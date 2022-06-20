@@ -1,16 +1,16 @@
 <?php
 class Display
 {
+
   private $bdd;
   private $permission;
 
-  public function __construct($bdd, $permission = true)
+  public function __construct($bdd)
   {
     $this->bdd = $bdd;
-    $this->permission = $permission;
   }
 
-  public function displayelement($sql, $heads, $type, $id='')
+  public function displayelement($sql, $heads, $type, $permission = true, $id = '')
   {
     switch ($type) {
       case 'query':
@@ -37,7 +37,6 @@ class Display
           ?>
         </tr>
         <?php
-
         do {
           $check = $user['ID'];
 
@@ -50,15 +49,14 @@ class Display
             <?php
             }
             ?>
-            <?php if ($this->permission) : ?>
-              <td><a type="submit" name="submit" href="userprofil.php?id=<?= $check ?>">Profile</a></td>
+            <?php if ($permission) : ?>
               <td>
-                <p class="delete" onclick="deleteft(<?= $check ?>,'<?= $user['Name'] . ' ' . $user['Surname']; ?>')" data-bs-toggle="modal" data-bs-target="#id01"><strong class="strong" title="Supprimer">&times</strong> <span class="dltxt">Delete</span></p>
+                <p class="delete" onclick="deleteft(<?= $check ?>, '<?= $user['Name'] . ' ' . $user['Surname']; ?>')" data-bs-toggle="modal" data-bs-target="#id01"><strong class="strong" title="Supprimer">&times</strong> <span class="dltxt">Delete</span></p>
               </td>
           </tr>
         <?php endif; ?>
       <?php
-        } while ($user = $utilisateur->fetch())
+        } while ($user = $utilisateur->fetch());
       ?>
       </table>
     </div>
@@ -74,7 +72,6 @@ class Display
         <div class="container">
           <h4>DELETE TEACHER ACCOUNT</h4>
           <p>Do you really want DELETE <span id="nom"></span> ?</p>
-
           <div class="clearfix">
             <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn" data-bs-dismiss="modal">Cancel</button>
             <button type="submit" name="delete" class="deletebtn">Delete</button>

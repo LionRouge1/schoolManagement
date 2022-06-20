@@ -23,33 +23,59 @@ require 'modules/Display.php';
 </head>
 
 <body>
-  <?php include '../header.php'; 
+  <?php include '../header.php';
   $teachers = new Display($bdd);
   $message = $teachers->message();
   ?>
-  
-  <section>
 
-    <?php
-    $sql = 'SELECT t.teacher_id AS ID, t.tchName AS Name, t.tchSurname AS Surname, t.schoolName, t.tchEmail as Email, t.contact, t.qualification, t.address, t.gender,
+  <main>
+    <section id="teachers">
+      <?php
+      $sql = 'SELECT t.teacher_id AS ID, t.avatar, t.tchName AS Name, t.tchSurname AS Surname, t.schoolName, t.tchEmail as Email, t.contact, t.qualification, t.address, t.gender,
     l.region, l.ctyName
     FROM teachers t JOIN locations l ON t.teacher_id = l.location_id';
-    
-    $delete = $teachers->deleteElement();
-    $heads = array('Name',
-    'Surname',
-    'School Name',
-    'Email',
-    'Contact',
-    'Qualification',
-    'Address',
-    'Gender',
-    'Region',
-    'City');
-    $teacher = $teachers->displayelement($sql, $heads, 'query');
-    ?>
 
-    <a href="adminprofil.php?id=1" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Change admin password</a>
+      $delete = $teachers->deleteElement();
+      $heads = array(
+        'Picture',
+        'Name',
+        'Surname',
+        'School Name',
+        'Email',
+        'Contact',
+        'Qualification',
+        'Address',
+        'Gender',
+        'Region',
+        'City'
+      );
+      $teacher = $teachers->displayelement($sql, $heads, 'query');
+      ?>
+
+      <a href="adminprofil.php?id=1" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Change admin password</a>
+    </section>
+
+    <section id="users">
+      <?php
+
+      $sql = 'SELECT u.user_id AS ID, u.userName AS Name, u.userSurname AS Surname, u.userEmail as Email, u.userContact, u.userAddress, u.gender,
+        u.status, l.region, l.ctyName
+        FROM users u JOIN locations l ON u.user_id = l.location_id';
+
+      $heads = array(
+        'Name',
+        'Surname',
+        'Email',
+        'Contact',
+        'Address',
+        'Gender',
+        'Status',
+        'Region',
+        'City'
+      );
+      $teacher = $teachers->displayelement($sql, $heads, 'query', false);
+      ?>
+    </section>
     <div class="modal" id="myModal">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -107,7 +133,7 @@ require 'modules/Display.php';
         </div>
       </div>
     </div>
-  </section>
+  </main>
 
   <script src="../js/adminjs.js"></script>
 </body>

@@ -1,17 +1,3 @@
-*{
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
-}
-section{
-	width: 100%;
-	height:auto;
-	display: block;
-	margin-top: 5%;
-	padding-bottom: 20px;
-	z-index: 0;
-	text-align: center;
-}
 table{
 	width: 100%;
 	font-size: 18px;
@@ -20,60 +6,27 @@ table{
 .table-striped{
 	overflow-x: auto;
 }
+
 tr,td{
 	padding: 10px;
 }
+
 .entete{
 	background-color: rgba(0, 0, 30, 0.5);
 	color: white;
 	font-size: 20px;
 	font-weight: bold;
 }
+
 .entete th{
 	color: #fff;
 }
-@media (max-width:768px) {
-	.logout{
-		display: block;
-		margin:2px;
-		font-size: 16px;
-	}
-	table{
-		font-size: 14px;
-		border: 1px solid #040E27;
-	}
-	tr,td{
-		padding: 2px;
-	}
-}
-.modal{
-	display: none;
-	position: fixed;
-	z-index: 100;
-	width: 100%;
-	height: 100%;
-	top: 0;
-	left: 0;
-	overflow: auto;
-	background-color: rgba(32.5,35.4,41.7,0.6);
-	padding-top: 50px;
-}
-.modal-content {
-	background-color: #fff;
-  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
-	padding: 25px 25px 25px 10%;
-	font-size: 20px;
-	color: #000;
-	text-align: left;
-  border: 1px solid #888;
-  width: 50%; /* Could be more or less, depending on screen size */
-}
-.modal-content p{
-	margin:10px
-}
+
+
 .line span {
 	margin:0 10px 10px  10px;
 }
+
 .close {
   position: absolute;
   right: 35px;
@@ -88,13 +41,13 @@ tr,td{
   color: #f44336;
   cursor: pointer;
 }
-.line >p{
+
+.line > p {
 	display: inline-block;
 	width: 25%;
-	float: left;
 	margin-right: 10%;
 }
-/* Set a style for all buttons */
+
 .clearfix button {
   color: white;
   padding: 14px 20px;
@@ -171,19 +124,6 @@ hr {
   display: table;
 }
 
-/* Change styles for cancel button and delete button on extra small screens */
-@media screen and (max-width: 300px) {
-  .cancelbtn, .deletebtn {
-     width: 100%;
-  }
-}
-@media (max-width:900px) {
-	.model{
-		width: 80%;
-		padding: 40px;
-	}
-
-
 /* Alert styles*/
 .alerted{
 	width: 400px;
@@ -239,4 +179,13 @@ hr {
 	95%{opacity: 1; transform: translateX(5%);}
 	98%{opacity: 1; transform: translateX(2%);}
 	100%{opacity: 1; transform: translateX(0%);}
+}
+
+section > .users {
+	display: none;
+}
+
+.active {
+	background-color: white;
+	color: rgb(4, 4, 17);
 }

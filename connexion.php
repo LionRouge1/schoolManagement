@@ -38,18 +38,14 @@ if (!empty($_POST['email']) && !empty($_POST['password'])) {
       $data = $check->fetch();
       $row = $check->rowCount();
       openSession($data, $row, $password, $who);
-      echo "user";
       break;
 
     case 'teachers':
-      
       $check = $bdd->prepare('SELECT teacher_id AS ID, tchName AS Name, tchSurname AS surname, tchEmail AS Email, tchPwd AS Password FROM teachers WHERE tchEmail = ?');
       $check->execute(array($email));
       $data = $check->fetch();
       $row = $check->rowCount();
-      
       openSession($data, $row, $password, $who);
-      
       break;
 
     case 'admin':
