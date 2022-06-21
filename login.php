@@ -32,7 +32,7 @@ if (isset($_GET['login_err'])) {
     case 'passwordAdmin':
     ?>
       <div class="alert alert-danger">
-        <strong>Error</strong> mot de passe administrateur incorrect
+        <strong>Error</strong> incorrect password
       </div>
 <?php
       break;
@@ -48,7 +48,7 @@ if (isset($_GET['login_err'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-  <title>Document</title>
+  <title>Login</title>
 </head>
 
 <body>

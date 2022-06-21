@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="css/app.css">
 <header>
  <marquee><h1>Marketplace for SHS Teachers in Ghana</h1></marquee>
 </header>
@@ -10,20 +11,24 @@
     ?>
         <ul class="navbar-nav">
           <li class="navbar-brand">
-            <img src="../images/avatars/<?= $avatar ?>" alt="Avatar" class="rounded-pill" style="height: 100px; width:120px;">
+            <img src="../images/avatars/<?= $avatar ?>" alt="Avatar" class="rounded-pill" style="height: 70px; width:120px;">
           </li>
-          <li class="navbar-brand" style="color: white;">
+          <li class="navbar-brand <?php if(isset($pagehome)) : ?> active <?php endif ?>" style="color: white;">
             <a href="<?php if (!isset($pagebook)) : ?> teachers.php <?php else : ?> ../pages/teachers.php<?php endif ?>" class="nav-link text-white">View ratings</a>
           </li>
-          <li class="navbar-brand">
+          <li class="navbar-brand <?php if(isset($pagebook)) : ?> active <?php endif ?>">
             <a href="../bookstore/index.php" class="nav-link text-white">View ebooks</a>
           </li>
-          <li class="navbar-brand">
+          <li class="navbar-brand <?php if(isset($pageUpdate)) : ?> active <?php endif ?>">
             <a href="<?php if (!isset($pagebook)) : ?> adminprofil.php?id=<?= $id ?> <?php else : ?> ../pages/adminprofil.php?id=<?= $id ?><?php endif ?>" class="nav-link text-white">Update profile</a>
           </li>
           <li class="navbar-brand">
             <button href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSubject">Add subject</button>
           </li>
+          <form class="d-flex" style="height: 47px;">
+            <input class="form-control me-2" id="search" onkeyup="tableFilter()" type="text" placeholder="Search">
+            <button class="btn btn-primary" type="button">Search</button>
+          </form>
         </ul>
         <a href="../deconnexion.php" class="btn btn-primary pr-0">Log out</a>
       <?php
@@ -31,23 +36,23 @@
       case 'users':
       ?>
         <ul class="navbar-nav">
-          <li class="navbar-brand">
-            <a href="../pages/users.php" class="nav-link text-white">View Teachers</a>
+          <li class="navbar-brand<?php if(!isset($pagebook)) : ?> active <?php endif ?>">
+            <a href="<?php if (!isset($pagebook)) : ?>users.php<?php else : ?> ../pages/users.php<?php endif ?>" class="nav-link text-white">View Teachers</a>
           </li>
-          <li class="navbar-brand">
+          <li class="navbar-brand<?php if(isset($pagebook)) : ?> active <?php endif ?>">
             <a href="../bookstore/index.php" class="nav-link text-white">View Ebook</a>
           </li>
         </ul>
-        <?php if (!isset($pagebook)) : ?>
-          <form class="d-flex" action="filteraction.php" method="POST">
-            <select name="filer" id="filter" required>
+        <?php if(!isset($pagebook)) : ?>
+          <form class="d-flex" action="users.php?filer=true" method="POST">
+            <select name="filer" id="filter" style="height: 38px">
               <option value="">Select__</option>
               <option value="region">Region</option>
               <option value="city">City</option>
               <option value="subject">Subject</option>
             </select>
-            <input class="form-control me-2" name="by" id="search" type="text" placeholder="Search by..." required>
-            <button type="submit" class="btn btn-primary" type="button">Search</button>
+            <p class="autocomplete"><input class="form-control me-2" name="by" id="search" type="text" placeholder="Search by..."></p>
+            <button type="submit" class="btn btn-primary" type="button" style="height: 38px">Search</button>
           </form>
         <?php else : ?>
           <form class="d-flex">

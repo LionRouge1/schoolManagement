@@ -43,11 +43,28 @@ class Display
         ?>
           <tr class="user">
             <?php
-            for ($i = 1; $i < count($user) / 2; $i++) {
+            if ($permission) :
             ?>
-              <td><?= $user[$i]; ?></td>
+              <td> <img src="../images/avatars/<?= $user['avatar'] ?>" alt="" style="width: 80px; height: 50px"> </td>
+              <td><?= $user['Name']; ?></td>
+              <td><?= $user['Surname']; ?></td>
+              <td><?= $user['schoolName']; ?></td>
+              <td><?= $user['Email']; ?></td>
+              <td><?= $user['contact']; ?></td>
+              <td><?= $user['qualification']; ?></td>
+              <td><?= $user['address']; ?></td>
+              <td><?= $user['gender']; ?></td>
+              <td><?= $user['region']; ?></td>
+              <td><?= $user['ctyName']; ?></td>
+              <?php
+            else :
+              for ($i = 1; $i < count($user) / 2; $i++) {
+
+              ?>
+                <td><?= $user[$i]; ?></td>
             <?php
-            }
+              }
+            endif;
             ?>
             <?php if ($permission) : ?>
               <td>

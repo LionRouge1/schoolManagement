@@ -41,7 +41,7 @@ class Rating
     $comments->execute(array($id));
     $rates = $comments->fetch();
     
-    if(is_null($rates)) {
+    if(is_null($rates) && !empty($rate)) {
       echo 'No comment yet';
     }
     else{

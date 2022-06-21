@@ -15,7 +15,6 @@ if ($row == 0) {
         $cost = ['cost' => 12];
         $password = password_hash($password, PASSWORD_BCRYPT, $cost);
 
-
         $loco = $bdd->prepare('SELECT * FROM locations WHERE region = ? AND ctyName = ? LIMIT 1');
         $loco->execute(array($region, $city));
         $locat = $loco->fetch();
@@ -38,8 +37,7 @@ if ($row == 0) {
           ));
         }
 
-       
-
+        
         if (!empty($_FILES['avatar']['name'])) {
 
           $lastId = $bdd->query('SELECT teacher_id FROM teachers ORDER BY teacher_id DESC LIMIT 1');
@@ -71,7 +69,6 @@ if ($row == 0) {
           'location_id' => $locatio,
           'gender' => $sexe
         ));
-
 
         $subj = $bdd->prepare('SELECT subject_id FROM subjects WHERE sbtName = ?');
         $subj->execute(array($subject));

@@ -7,6 +7,7 @@ if(!isset($_SESSION['id'])) {
 require_once '../config.php';
 $who = $_SESSION['who'];
 $id = $_SESSION['id'];
+
 switch ($who) {
   case 'teachers':
     $adminis = $bdd->prepare('SELECT * FROM teachers WHERE teacher_id = ?');

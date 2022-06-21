@@ -12,6 +12,7 @@ const subjects = new Set(['BIOLOGY', 'GENERAL ARTS', 'LITERATURE IN ENGLISH', 'F
   'Wood Work', 'GENERAL SCIENCE', 'PHYSICS', 'CHEMISTRY', 'ELECTIVE MATHS']);
 showTab(currentTab);
 
+
 function showTab(n) {
   var x = document.getElementsByClassName("champ");
   x[n].style.display = "block";

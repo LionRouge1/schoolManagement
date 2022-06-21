@@ -5,50 +5,56 @@ class Books
   private $ebooks;
   private $files;
 
-  public function __construct($bdd)
+  public function __construct()
   {
-    $this->bdd = $bdd;
-  }
-
-  private function connexion($sql)
-  {
-    return $this->bdd->prepare($sql);
+    $this->bdd = mysqli_connect('localhost', 'root', '', 'databaseSchool');;
   }
 
   public function addBook()
   {
-    if (isset($_POST['title']) && !empty($_POST['title'])) {
-      $ebooks = $_POST['title'];
-      $imageFileType = strtolower(pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION));
-      $photo = $ebooks . '.' . $imageFileType;
-      $chemin = 'books' . $photo;
-      $charge = move_uploaded_file($_FILES['file']['tmp_name'], $chemin);
+    if (isset($_FILES['book']) && !empty($_FILES['book'])) {
+      $bookname = $_FILES['book']['name'];
+      $destination = 'books/' . $bookname;
+      $extension = pathinfo($bookname, PATHINFO_EXTENSION);
+      $book = $_FILES['book']['tmp_name'];
+      $size = $_FILES['book']['size'];
 
-      $sql = 'INSERT INTO ebooks (ebooks, files) VALUES (:ebooks, :files)';
-      $connexion = $this->connexion($sql);
-      $connexion->execute(array(
-        'ebooks' => $ebooks,
-        'files' => $chemin
-      ));
+      if (in_array($extension, ['pdf', 'doc', 'docx'])) {
+        if ($size < 990000000) {
+          if (move_uploaded_file($book, $destination)) {
+            $sql = "INSERT INTO ebooks (ebooks, size, downloads) VALUES ('$bookname', $size, 0)";
+            if(mysqli_query($this->bdd, $sql)){
+              header('Location: index.php');
+              die();
+            };
+            echo "Sorry we couldn't upload the file";
+            return;
+          }
+          echo "File size too large";
+          return;
+        }
+      }
     }
   }
 
   public function display($who)
   {
-    $sql = 'SELECT * FROM ebooks';
-    $connexion = $this->bdd->query($sql);
-    $books = $connexion->fetch();
-    do {
+
+    $sql = "SELECT * FROM ebooks";
+    $result = mysqli_query($this->bdd, $sql);
+
+    $files = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+    foreach ($files as $file) :
 ?>
       <tr>
-        <td><?= $books['ebooks'] ?></td>
-        <td><a href="<?= $books['files'] ?>" download><?= $books['files'] ?></a></td>
-        
-          <?php if ($who == 'admin') : ?><td> <a href="delete.php?id=<?= $books['book_id'] ?>" id="<?= $books['book_id'] ?>" class="btn">Remove</a></td><?php endif ?>
+        <td><?php echo $file['ebooks']; ?></td>
+        <td><?php echo floor($file['size'] / 1000) . ' KB'; ?></td>
+        <td><?php echo $file['downloads']; ?></td>
+        <td><a href="delete.php?file_id=<?php echo $file['book_id'] ?>">Download</a></td>
       </tr>
 <?php
-
-    } while ($books = $connexion->fetch());
+    endforeach;
   }
 
   public function remove()
@@ -56,5 +62,37 @@ class Books
     $id = $_GET['id'];
     $delete = $this->bdd->prepare('DELETE FROM ebooks WHERE book_id = ?');
     $delete->execute(array($id));
+  }
+
+  public function download()
+  {
+    if (isset($_GET['file_id'])) {
+      $id = $_GET['file_id'];
+    
+      $sql = "SELECT * FROM ebooks WHERE book_id=$id";
+      $result = mysqli_query($this->bdd, $sql);
+    
+      $file = mysqli_fetch_assoc($result);
+      $filepath = 'books/' . $file['ebooks'];
+      print_r($filepath);
+    
+      if (file_exists($filepath)) {
+          header('Content-Description: File Transfer');
+          header('Content-Type: application/octet-stream');
+          header('Content-Disposition: attachment; filename=' . basename($filepath));
+          header('Expires: 0');
+          header('Cache-Control: must-revalidate');
+          header('Pragma: public');
+          header('Content-Length: ' . filesize('books/' . $file['ebooks']));
+          readfile('books/' . $file['ebooks']);
+    
+          $newCount = $file['downloads'] + 1;
+          $updateQuery = "UPDATE ebooks SET downloads=$newCount WHERE book_id=$id";
+          mysqli_query($this->bdd, $updateQuery);
+          exit;
+      }
+      echo "File not exist";
+    
+    }
   }
 }

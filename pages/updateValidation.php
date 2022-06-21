@@ -72,11 +72,11 @@ switch ($who) {
       $sql = 'UPDATE teachers SET tchEmail =? WHERE teacher_id = ?';
       $adminup= $bdd->prepare($sql);
       $adminup->execute(array($_POST['email'], $id));
-      header('Location: adminprofil.php?error=true');
+      header('Location: ../deconnexion.php');
       die();
     }
 
-    if (isset($_POST['password']) and isset($_POST['2password'])) {
+    if (isset($_POST['password']) && !empty($_POST['password']) and isset($_POST['2password'])) {
       $password = htmlspecialchars($_POST['password']);
       $password_retype = htmlspecialchars($_POST['2password']);
 
@@ -87,7 +87,7 @@ switch ($who) {
         $adminup= $bdd->prepare($sql);
         $adminup->execute(array($password, $id));
 
-        header('Location: adminprofil.php?error=true');
+        header('Location: ../deconnexion.php');
         die();
       } else {
         header('Location: adminprofil.php?error=false');

@@ -56,6 +56,8 @@ if (!empty($_POST['email']) && !empty($_POST['password'])) {
       if ($rowAdmin == 1) {
         if ($password == $dataAdmin['adminPwd']) {
           $_SESSION['id'] = $dataAdmin['admin_id'];
+          $_SESSION['password'] = $dataAdmin['adminPwd'];
+          $_SESSION['email'] = $dataAdmin['adminEmail'];
           header('Location: pages/administrator.php');
           die();
         } else {

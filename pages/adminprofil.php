@@ -6,8 +6,15 @@ if(!isset($_SESSION['id'])) {
 }
 require_once '../config.php';
 require 'modules/addSubjec.php';
+
 $who = $_SESSION['who'];
 $id = $_SESSION['id'];
+$pageUpdate = true;
+$adminis = $bdd->prepare('SELECT * FROM administrator WHERE admin_id = ?');
+$adminis->execute(array($id));
+$rech = $adminis->fetch();
+
+
 switch ($who) {
   case 'teachers':
     $adminis = $bdd->prepare('SELECT * FROM teachers WHERE teacher_id = ?');

@@ -6,6 +6,7 @@ if (!isset($_SESSION['id'])) {
 }
 require_once '../config.php';
 require 'modules/Display.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -23,7 +24,11 @@ require 'modules/Display.php';
 </head>
 
 <body>
-  <?php include '../header.php';
+  <?php 
+  include '../header.php';
+  ?>
+  <link rel="stylesheet" href="css/app.css">
+  <?php
   $teachers = new Display($bdd);
   $message = $teachers->message();
   ?>
@@ -49,7 +54,7 @@ require 'modules/Display.php';
         'Region',
         'City'
       );
-      $teacher = $teachers->displayelement($sql, $heads, 'query');
+      $teacher = $teachers->displayelement($sql, $heads, 'query', true, true);
       ?>
 
       <a href="adminprofil.php?id=1" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Change admin password</a>
@@ -71,7 +76,8 @@ require 'modules/Display.php';
         'Gender',
         'Status',
         'Region',
-        'City'
+        'City',
+        'Action'
       );
       $teacher = $teachers->displayelement($sql, $heads, 'query', false);
       ?>
@@ -88,7 +94,7 @@ require 'modules/Display.php';
             <h4 class="modal-title">Change admin password</h4>
           </div>
           <div class="modal-body">
-            <form action="" method="post">
+            <form action="../adminaction.php" method="post">
               <div><label for="email">Login Email :</label>
                 <input type="email" id="email" name="email" value="<?= $rech['adminEmail'] ?>" required>
               </div>
@@ -101,32 +107,6 @@ require 'modules/Display.php';
               <input type="submit" value="changer">
             </form>
           </div>
-
-          <?php
-          if (isset($_POST['email']) and $_POST['email'] !== $rech['adminEmail']) {
-            $email = htmlspecialchars($_POST['email']);
-            $adminup = $bdd->prepare('UPDATE administrator SET adminEmail=? WHERE admin_id=1');
-            $adminup->execute(array($email));
-            header('Location: administrator.php');
-            die();
-          }
-
-          if (isset($_POST['password']) and isset($_POST['2password'])) {
-            $password = htmlspecialchars($_POST['password']);
-            $password_retype = htmlspecialchars($_POST['2password']);
-
-
-            if ($password == $password_retype) {
-
-              $adminup = $bdd->prepare('UPDATE administrator SET password=? WHERE admin_id=1');
-              $adminup->execute(array($password));
-              header('Location: administrator.php');
-              die();
-            } else {
-              echo '<div class="alert alert-danger"><strong>Error!! </strong> Different password</div>';
-            }
-          }
-          ?>
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
           </div>

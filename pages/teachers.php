@@ -6,6 +6,7 @@ if (!isset($_SESSION['id'])) {
 }
 $id = $_SESSION['id'];
 $who = $_SESSION['who'];
+$pagehome = true;
 require_once '../config.php';
 require '../pages/modules/rate.php';
 
@@ -22,7 +23,7 @@ $rating = new Rating($bdd);
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   <link rel="stylesheet" href="../bookstore/style.css">
-  <title>Document</title>
+  <title>View rating</title>
 
   <style>
     .page{
