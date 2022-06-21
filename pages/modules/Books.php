@@ -52,6 +52,7 @@ class Books
         <td><?php echo floor($file['size'] / 1000) . ' KB'; ?></td>
         <td><?php echo $file['downloads']; ?></td>
         <td><a href="delete.php?file_id=<?php echo $file['book_id'] ?>">Download</a></td>
+        <?php if ($who == 'admin') : ?><td> <a href="delete.php?id=<?= $file['book_id'] ?>" id="<?= $file['book_id'] ?>" class="btn">Remove</a></td><?php endif ?>
       </tr>
 <?php
     endforeach;
@@ -60,8 +61,11 @@ class Books
   public function remove()
   {
     $id = $_GET['id'];
-    $delete = $this->bdd->prepare('DELETE FROM ebooks WHERE book_id = ?');
-    $delete->execute(array($id));
+    $sql = "DELETE FROM ebooks WHERE book_id=$id";
+    if(mysqli_query($this->bdd, $sql)){
+      header('Location: index.php');
+      die();
+    };
   }
 
   public function download()
@@ -74,7 +78,6 @@ class Books
     
       $file = mysqli_fetch_assoc($result);
       $filepath = 'books/' . $file['ebooks'];
-      print_r($filepath);
     
       if (file_exists($filepath)) {
           header('Content-Description: File Transfer');
@@ -92,7 +95,6 @@ class Books
           exit;
       }
       echo "File not exist";
-    
     }
   }
 }

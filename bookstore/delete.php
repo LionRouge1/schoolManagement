@@ -11,8 +11,6 @@ require '../pages/modules/Books.php';
 $obj = new Books($bdd);
 if (isset($_GET['id'])) {
   $delete = $obj->remove();
-  header('Location: index.php');
-  die();
 }
 if (isset($_FILES['book'])) {
   $add = $obj->addBook();
