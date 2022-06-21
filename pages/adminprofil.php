@@ -10,9 +10,9 @@ require 'modules/addSubjec.php';
 $who = $_SESSION['who'];
 $id = $_SESSION['id'];
 $pageUpdate = true;
-$adminis = $bdd->prepare('SELECT * FROM administrator WHERE admin_id = ?');
-$adminis->execute(array($id));
-$rech = $adminis->fetch();
+// $adminis = $bdd->prepare('SELECT * FROM administrator WHERE admin_id = ?');
+// $adminis->execute(array($id));
+// $rech = $adminis->fetch();
 
 
 switch ($who) {

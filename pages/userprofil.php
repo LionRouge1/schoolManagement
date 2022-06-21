@@ -1,35 +1,35 @@
 <?php
 session_start();
 ob_start();
-if(!isset($_SESSION['id'])) {
-  header('Location: ../deconnexion.php'); die();
+if (!isset($_SESSION['id'])) {
+  header('Location: ../deconnexion.php');
+  die();
 }
-require_once '../config.php';
+
+$bdd = mysqli_connect('localhost', 'root', '', 'databaseSchool');
 $who = $_SESSION['who'];
 $id = $_SESSION['id'];
 
-switch ($who) {
-  case 'teachers':
-    $adminis = $bdd->prepare('SELECT * FROM teachers WHERE teacher_id = ?');
-    $adminis->execute(array($id));
-    $rech = $adminis->fetch();
-    $email = $rech['tchEmail'];
-    $name = $rech['tchName'];
-    $surname = $rech['tchSurname'];
-    $password = $rech['tchPwd'];
-    $school = $rech['schoolName'];
-    $contact = $rech['contact'];
-    $qualification = $rech['qualification'];
-    $table = 'teachers';
-    $idn = 'teacher_id';
-    break;
+$sql = "SELECT * FROM users WHERE user_id=$id";
 
-  case 'admin':
-    $adminis = $bdd->prepare('SELECT * FROM users WHERE user_id = ?');
-    $adminis->execute(array($_SESSION['id']));
-    $rech = $adminis->fetch();
-    break;
-}
+$result = mysqli_query($bdd, $sql);
+$rech = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+foreach($rech as $user):
+
+$email = $user['userEmail'];
+$name = $user['userName'];
+$surname = $user['userSurname'];
+$password = $user['userPwd'];
+$contact = $user['userContact'];
+$address = $user['userAddress'];
+
+
+endforeach;
+
+$table = 'users';
+$idn = 'user_id';
+
 ?>
 <!DOCTYPE html>
 <html lang="fr" dir="ltr">
@@ -96,7 +96,7 @@ switch ($who) {
   <?php include 'header.php';
   ?>
   <section class="profil">
-    <form action="updateValidation.php" method="post" class="justify-content-center">
+    <form action="updateUser.php" method="post" class="justify-content-center">
       <div class="mb-3 mt-3">
         <label for="name" class="form-label">Name:</label>
         <input type="text" class="form-control" id="name" placeholder="Update name" name="name" value="<?= $name ?>">
@@ -106,16 +106,12 @@ switch ($who) {
         <input type="text" class="form-control" id="surname" placeholder="Update surname" name="surname" value="<?= $surname ?>">
       </div>
       <div class="mb-3 mt-3">
-        <label for="school" class="form-label">School Name:</label>
-        <input type="text" class="form-control" id="school" placeholder="Update school name" name="school" value="<?= $school ?>">
-      </div>
-      <div class="mb-3 mt-3">
         <label for="contact" class="form-label">contact:</label>
         <input type="text" class="form-control" id="contact" placeholder="Update contact" name="contact" value="<?= $contact ?>">
       </div>
       <div class="mb-3 mt-3">
-        <label for="qualification" class="form-label">qualification:</label>
-        <input type="text" class="form-control" id="qualification" placeholder="Update qualification" name="qualification" value="<?= $qualification ?>">
+        <label for="address" class="form-label">Address:</label>
+        <input type="text" class="form-control" id="address" placeholder="Update address" name="address" value="<?= $address ?>">
       </div>
       <div class="mb-3 mt-3">
         <label for="email" class="form-label">Email:</label>
@@ -172,9 +168,6 @@ switch ($who) {
       EmailPwd.type = "password";
     }
   }
-
-
-
 </script>
 
 </html>

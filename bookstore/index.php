@@ -64,6 +64,9 @@ $about = new Books($bdd);
     <div id="addBook" class="modal">
       <div class="modal-dialog">
         <div class="modal-content">
+          <div class="modal-header">
+            <h3>Your file should be in one of the following formats: <strong>.doc</strong>,  <strong>.pdf</strong>,  <strong>.docx</strong></h3>
+          </div>
           <form action="delete.php" method="post" class="m-4" enctype="multipart/form-data">
             <div class="m-2">
               <input type="file" accept=".pdf, .doc, .docx" name="book" class="text-inpute" required />
