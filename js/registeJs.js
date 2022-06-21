@@ -96,8 +96,6 @@ var loadFile = function (event) {
   image.src = URL.createObjectURL(event.target.files[0]);
 };
 
-
-
 function autocomplete(inp, arr) {
   var currentFocus;
   inp.addEventListener("input", function (e) {
@@ -139,6 +137,7 @@ function autocomplete(inp, arr) {
       }
     }
   });
+
   function addActive(x) {
     if (!x) return false;
     removeActive(x);

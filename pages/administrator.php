@@ -6,6 +6,7 @@ if (!isset($_SESSION['id'])) {
 }
 require_once '../config.php';
 require 'modules/Display.php';
+$pageadmin = true;
 
 ?>
 <!DOCTYPE html>
@@ -59,29 +60,6 @@ require 'modules/Display.php';
 
       <a href="adminprofil.php?id=1" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Change admin password</a>
     </section>
-
-    <section id="users">
-      <?php
-
-      $sql = 'SELECT u.user_id AS ID, u.userName AS Name, u.userSurname AS Surname, u.userEmail as Email, u.userContact, u.userAddress, u.gender,
-        u.status, l.region, l.ctyName
-        FROM users u JOIN locations l ON u.user_id = l.location_id';
-
-      $heads = array(
-        'Name',
-        'Surname',
-        'Email',
-        'Contact',
-        'Address',
-        'Gender',
-        'Status',
-        'Region',
-        'City',
-        'Action'
-      );
-      $teacher = $teachers->displayelement($sql, $heads, 'query', false);
-      ?>
-    </section>
     <div class="modal" id="myModal">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -99,10 +77,10 @@ require 'modules/Display.php';
                 <input type="email" id="email" name="email" value="<?= $rech['adminEmail'] ?>" required>
               </div>
               <div><label for="password">New password:</label>
-                <input type="password" name="password" id="password" placeholder="Entrer le nouveau mot de passe">
+                <input type="password" name="password" id="password" placeholder="New password...">
               </div>
               <div><label for="2password">Confirm password :</label>
-                <input type="password" name="2password" id="2password" placeholder="confirmer le mot de passe">
+                <input type="password" name="2password" id="2password" placeholder="Confirm password">
               </div>
               <input type="submit" value="changer">
             </form>
@@ -114,7 +92,31 @@ require 'modules/Display.php';
       </div>
     </div>
   </main>
+  <script>
+    function tableFilter(who = '') {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("search");
+  filter = input.value.toUpperCase();
+  table = document.querySelector(".table");
+  tr = table.getElementsByTagName("tr");
 
+  for (i = 0; i < tr.length; i++) {
+
+    td = tr[i].getElementsByTagName("td")[1];
+    console.log('admin')
+
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+  </script>
+</body>
   <script src="../js/adminjs.js"></script>
 </body>
 

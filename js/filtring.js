@@ -35,6 +35,7 @@ function autocomplete(inp, arr) {
         b = document.createElement("DIV");
         b.style.padding = '8px';
         b.style.borderBottom = '1px solid #ccc';
+        b.style.pointer = 'cursor';
         b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
         b.innerHTML += arr[i].substr(val.length);
         b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";

@@ -38,51 +38,73 @@ $about = new Books($bdd);
 
 <body>
   <?php
-  if ($who == 'admin'){
+  if ($who == 'admin') {
     include '../header.php';
   } else {
     include '../pages/header.php';
   }
   ?>
   <main>
-    <?php if($who == 'admin'):?> <button class="btn btn-primary btnadd" data-bs-toggle="modal" data-bs-target="#addBook">Add</button><?php endif?>
+    <?php if ($who == 'admin') : ?> <button class="btn btn-primary btnadd" data-bs-toggle="modal" data-bs-target="#addBook">Add</button><?php endif ?>
     <div class="table-striped">
       <table class="table">
-            <tr class="entete">
-              <th>Ebook</th>
-              <th>Size</th>
-              <th>Downloads</th>
-             <?php if($who == 'admin'): ?>  <th>action</th><?php endif?>
-            </tr>
-          <!--- List of all the books -->
-          <?php
-          $books = $about->display($who);
-          ?>
-        </table>
-      </div>
+        <tr class="entete">
+          <th>Ebook</th>
+          <th>Size</th>
+          <th>Downloads</th>
+          <?php if ($who == 'admin') : ?> <th>action</th><?php endif ?>
+        </tr>
+        <!--- List of all the books -->
+        <?php
+        $books = $about->display($who);
+        ?>
+      </table>
+    </div>
 
-      <div id="addBook" class="modal">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <form action="delete.php" method="post" class="m-4" enctype="multipart/form-data">
-              <div class="m-2">
-              <input type="file" accept=".pdf, .doc, .docx" name="book" class="text-inpute" required/>
-              </div>
-              <button type="submit" class="btn btn-primary" id="button">Add</button>
-            </form>
-            <span id="error"></span>
-          </div>
+    <div id="addBook" class="modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form action="delete.php" method="post" class="m-4" enctype="multipart/form-data">
+            <div class="m-2">
+              <input type="file" accept=".pdf, .doc, .docx" name="book" class="text-inpute" required />
+            </div>
+            <button type="submit" class="btn btn-primary" id="button">Add</button>
+          </form>
+          <span id="error"></span>
         </div>
       </div>
+    </div>
     <?php
-      if(isset($_POST['title']) && !empty($_POST['title']) && isset($_POST['author']) && !empty($_POST['author']))
-      {
-        $books = $about->addBook($_POST['title'], $_POST['author']);
-      }
+    if (isset($_POST['title']) && !empty($_POST['title']) && isset($_POST['author']) && !empty($_POST['author'])) {
+      $books = $about->addBook($_POST['title'], $_POST['author']);
+    }
     ?>
 
   </main>
-  <script src="../js/adminjs.js"></script>
+  <script>
+    function tableFilter() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("search");
+      filter = input.value.toUpperCase();
+      table = document.querySelector(".table");
+      tr = table.getElementsByTagName("tr");
+
+      for (i = 0; i < tr.length; i++) {
+
+        td = tr[i].getElementsByTagName("td")[0];
+        console.log('admin')
+
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+  </script>
 </body>
 
 </html>
