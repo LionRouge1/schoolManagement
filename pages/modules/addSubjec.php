@@ -13,7 +13,7 @@ class Subject
     $subject = $this->bdd->prepare($sqlsu);
     $subject->execute(array($_POST['subject']));
     $subId = $subject->fetch();
-
+ 
     $sql = 'INSERT INTO subjects_teachers (subject_id, teacher_id) VALUES (:subject_id, :teacher_id)';
     $insert = $this->bdd->prepare($sql);
     $insert->execute(array(

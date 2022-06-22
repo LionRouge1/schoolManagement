@@ -82,7 +82,7 @@ $pageadmin = true;
               <div><label for="2password">Confirm password :</label>
                 <input type="password" name="2password" id="2password" placeholder="Confirm password">
               </div>
-              <input type="submit" value="changer">
+              <input type="submit" value="Change">
             </form>
           </div>
           <div class="modal-footer">

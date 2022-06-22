@@ -40,9 +40,11 @@ class Rating
     $comments = $this->bdd->prepare($sql);
     $comments->execute(array($id));
     $rates = $comments->fetch();
-    
-    if(is_null($rates) && !empty($rate)) {
-      echo 'No comment yet';
+
+    if(is_null($rates) || empty($rates)) {
+      ?>
+      <h1>No rating yet</h1>
+      <?php
     }
     else{
       ?>

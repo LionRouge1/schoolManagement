@@ -11,3 +11,10 @@ p > div {
 	position: absolute;
 	z-index: 1;
 }
+
+.form-control{
+	border: navajowhite;
+}
+div > input {
+	border: none !important;
+}

@@ -26,7 +26,7 @@ function autocomplete(inp, arr) {
     a = document.createElement("DIV");
     a.setAttribute("id", this.id + "autocomplete-list");
     a.setAttribute("class", "autocomplete-items");
-    a.style.backgroundColor = 'rgba(255, 255, 255, 0.774)';
+    a.style.backgroundColor = 'rgba(255, 255, 255, 0.85)';
     a.style.position = 'absolute';
     a.style.zIndex = 1;
     this.parentNode.appendChild(a);
@@ -97,7 +97,6 @@ filter.addEventListener('change', () => {
       case 'region':
         search.addEventListener('keydown', () => {
           autocomplete(search, Array.from(region));
-          console.log('toto');
         });
         break;
       case 'subject':
@@ -107,7 +106,4 @@ filter.addEventListener('change', () => {
         break;
     }
   }
-})
-
-
-
+});

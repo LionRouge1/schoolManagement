@@ -12,12 +12,15 @@ $pagebook = true;
 require_once '../config.php';
 require '../pages/modules/Books.php';
 
-$sql1 = 'SELECT * FROM teachers where teacher_id = ?';
-$connexion = $bdd->prepare($sql1);
+if ($who == 'teachers') {
+  $sql1 = 'SELECT * FROM teachers where teacher_id = ?';
+  $connexion = $bdd->prepare($sql1);
 
-$connexion->execute(array($id));
-$teacher = $connexion->fetch();
-$avatar = $teacher['avatar'];
+  $connexion->execute(array($id));
+  $teacher = $connexion->fetch();
+  $avatar = $teacher['avatar'];
+}
+
 
 $about = new Books($bdd);
 ?>
@@ -65,7 +68,7 @@ $about = new Books($bdd);
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h3>Your file should be in one of the following formats: <strong>.doc</strong>,  <strong>.pdf</strong>,  <strong>.docx</strong></h3>
+            <h3>Your file should be in one of the following formats: <strong>.doc</strong>, <strong>.pdf</strong>, <strong>.docx</strong></h3>
           </div>
           <form action="delete.php" method="post" class="m-4" enctype="multipart/form-data">
             <div class="m-2">
