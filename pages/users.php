@@ -2,6 +2,9 @@
 session_start();
 require_once '../config.php';
 require 'modules/Display.php';
+require 'modules/filter.php';
+$userpage = true;
+$who = $_SESSION['who'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,34 +17,45 @@ require 'modules/Display.php';
   <link rel="stylesheet" href="css/adminstylew.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-  <title>Document</title>
+
+  <script src="https://kit.fontawesome.com/84967187a9.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="css/app.css">
+  <title>Views teachers</title>
 </head>
 
 <body>
-  <?php 
-  include '../header.php';
-  $teachers = new Display($bdd, false);
-  $message = $teachers->message();
+  <?php
+  include 'header.php';
+    $filter = new Filter($bdd);
 
-  $sql = 'SELECT u.user_id AS ID, u.userName AS Name, u.userSurname AS Surname, u.userEmail as Email, u.userContact, u.userAddress, u.gender,
-  u.status, l.region, l.ctyName
-  FROM users u JOIN locations l ON u.user_id = l.location_id';
-  
-  $delete = $teachers->deleteElement();
-  $heads = array(
-    'Name',
-    'Surname',
-    'Email',
-    'Contact',
-    'Address',
-    'Gender',
-    'Status',
-    'Region',
-    'City'
-  );
-  $teacher = $teachers->displayelement($sql, $heads);
+    $main = $filter->mainfilter();
   ?>
-  <script src="../js/adminjs.js"></script>
-</body>
+    <script>
+    function tableFilter() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("search");
+  filter = input.value.toUpperCase();
+  table = document.querySelector(".table");
+  tr = table.getElementsByTagName("tr");
 
+  for (i = 0; i < tr.length; i++) {
+
+    td = tr[i].getElementsByTagName("td")[0];
+    console.log('admin')
+
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+  </script>
+</body>
+  <script src="../js/adminjs.js"></script>
+  <script src="../js/filtring.js"></script>
+</body>
 </html>

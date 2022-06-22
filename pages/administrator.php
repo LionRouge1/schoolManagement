@@ -6,6 +6,8 @@ if (!isset($_SESSION['id'])) {
 }
 require_once '../config.php';
 require 'modules/Display.php';
+$pageadmin = true;
+
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -23,33 +25,41 @@ require 'modules/Display.php';
 </head>
 
 <body>
-  <?php include '../header.php'; 
+  <?php 
+  include '../header.php';
+  ?>
+  <link rel="stylesheet" href="css/app.css">
+  <?php
   $teachers = new Display($bdd);
   $message = $teachers->message();
   ?>
-  
-  <section>
 
-    <?php
-    $sql = 'SELECT t.teacher_id AS ID, t.tchName AS Name, t.tchSurname AS Surname, t.schoolName, t.tchEmail as Email, t.contact, t.qualification, t.address, t.gender,
+  <main>
+    <section id="teachers">
+      <?php
+      $sql = 'SELECT t.teacher_id AS ID, t.avatar, t.tchName AS Name, t.tchSurname AS Surname, t.schoolName, t.tchEmail as Email, t.contact, t.qualification, t.address, t.gender,
     l.region, l.ctyName
     FROM teachers t JOIN locations l ON t.teacher_id = l.location_id';
-    
-    $delete = $teachers->deleteElement();
-    $heads = array('Name',
-    'Surname',
-    'School Name',
-    'Email',
-    'Contact',
-    'Qualification',
-    'Address',
-    'Gender',
-    'Region',
-    'City');
-    $teacher = $teachers->displayelement($sql, $heads, 'query');
-    ?>
 
-    <a href="adminprofil.php?id=1" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Change admin password</a>
+      $delete = $teachers->deleteElement();
+      $heads = array(
+        'Picture',
+        'Name',
+        'Surname',
+        'School Name',
+        'Email',
+        'Contact',
+        'Qualification',
+        'Address',
+        'Gender',
+        'Region',
+        'City'
+      );
+      $teacher = $teachers->displayelement($sql, $heads, 'query', true, true);
+      ?>
+
+      <a href="adminprofil.php?id=1" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Change admin password</a>
+    </section>
     <div class="modal" id="myModal">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -62,53 +72,51 @@ require 'modules/Display.php';
             <h4 class="modal-title">Change admin password</h4>
           </div>
           <div class="modal-body">
-            <form action="" method="post">
+            <form action="../adminaction.php" method="post">
               <div><label for="email">Login Email :</label>
                 <input type="email" id="email" name="email" value="<?= $rech['adminEmail'] ?>" required>
               </div>
               <div><label for="password">New password:</label>
-                <input type="password" name="password" id="password" placeholder="Entrer le nouveau mot de passe">
+                <input type="password" name="password" id="password" placeholder="New password...">
               </div>
               <div><label for="2password">Confirm password :</label>
-                <input type="password" name="2password" id="2password" placeholder="confirmer le mot de passe">
+                <input type="password" name="2password" id="2password" placeholder="Confirm password">
               </div>
-              <input type="submit" value="changer">
+              <input type="submit" value="Change">
             </form>
           </div>
-
-          <?php
-          if (isset($_POST['email']) and $_POST['email'] !== $rech['adminEmail']) {
-            $email = htmlspecialchars($_POST['email']);
-            $adminup = $bdd->prepare('UPDATE administrator SET adminEmail=? WHERE admin_id=1');
-            $adminup->execute(array($email));
-            header('Location: administrator.php');
-            die();
-          }
-
-          if (isset($_POST['password']) and isset($_POST['2password'])) {
-            $password = htmlspecialchars($_POST['password']);
-            $password_retype = htmlspecialchars($_POST['2password']);
-
-
-            if ($password == $password_retype) {
-
-              $adminup = $bdd->prepare('UPDATE administrator SET password=? WHERE admin_id=1');
-              $adminup->execute(array($password));
-              header('Location: administrator.php');
-              die();
-            } else {
-              echo '<div class="alert alert-danger"><strong>Error!! </strong> Different password</div>';
-            }
-          }
-          ?>
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </main>
+  <script>
+    function tableFilter(who = '') {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("search");
+  filter = input.value.toUpperCase();
+  table = document.querySelector(".table");
+  tr = table.getElementsByTagName("tr");
 
+  for (i = 0; i < tr.length; i++) {
+
+    td = tr[i].getElementsByTagName("td")[1];
+    console.log('admin')
+
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+  </script>
+</body>
   <script src="../js/adminjs.js"></script>
 </body>
 

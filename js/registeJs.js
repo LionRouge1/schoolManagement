@@ -12,6 +12,7 @@ const subjects = new Set(['BIOLOGY', 'GENERAL ARTS', 'LITERATURE IN ENGLISH', 'F
   'Wood Work', 'GENERAL SCIENCE', 'PHYSICS', 'CHEMISTRY', 'ELECTIVE MATHS']);
 showTab(currentTab);
 
+
 function showTab(n) {
   var x = document.getElementsByClassName("champ");
   x[n].style.display = "block";
@@ -41,9 +42,10 @@ function nextPrev(n) {
 }
 
 function validateForm() {
-  var x, y, i, valid = true;
+  var x, y, i, contact, valid = true;
   x = document.getElementsByClassName("champ");
   y = x[currentTab].querySelectorAll('.required > input, select');
+  contact = document.getElementById('contact');
   let region = document.getElementById('myInput');
   let subject = document.getElementById('subject');
 
@@ -51,6 +53,13 @@ function validateForm() {
     if (y[i].value == "") {
       y[i].className += " invalid";
       valid = false;
+    }
+
+    if(y[i] == contact) {
+      if(onlyNumber(contact.value) == false) {
+        y[i].className += " invalid";
+        valid = false
+      }
     }
 
     if(y[i] == region) {
@@ -86,8 +95,6 @@ var loadFile = function (event) {
   var image = document.getElementById('output');
   image.src = URL.createObjectURL(event.target.files[0]);
 };
-
-
 
 function autocomplete(inp, arr) {
   var currentFocus;
@@ -130,6 +137,7 @@ function autocomplete(inp, arr) {
       }
     }
   });
+
   function addActive(x) {
     if (!x) return false;
     removeActive(x);
@@ -157,3 +165,23 @@ function autocomplete(inp, arr) {
 
 autocomplete(document.getElementById("myInput"), Array.from(regions));
 autocomplete(document.getElementById("subject"), Array.from(subjects));
+
+
+// contact
+
+
+
+function onlyNumber(n) {
+  const contact = document.getElementById('contact');
+  const arr = ['+', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ' ']
+  const new_arr = contact.value.split('');
+  
+  for(let i = 0; i< new_arr.length; i++)
+  {
+    if(!arr.includes(new_arr[i])) {
+      return false;
+    }
+  }
+}
+
+

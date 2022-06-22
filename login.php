@@ -32,7 +32,7 @@ if (isset($_GET['login_err'])) {
     case 'passwordAdmin':
     ?>
       <div class="alert alert-danger">
-        <strong>Error</strong> mot de passe administrateur incorrect
+        <strong>Error</strong> incorrect password
       </div>
 <?php
       break;
@@ -47,9 +47,8 @@ if (isset($_GET['login_err'])) {
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="style/index.css">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-  <title>Document</title>
+  <title>Login</title>
 </head>
 
 <body>
@@ -64,6 +63,7 @@ if (isset($_GET['login_err'])) {
       <?php
       break;
     case 'admin' :
+      $admin = true;
       ?>
       <p class="btn btn-outline-dark">Welcome to the admin page</p>
       <?php
@@ -72,6 +72,7 @@ if (isset($_GET['login_err'])) {
       ?>
       <p class="btn btn-outline-dark">Welcome to teachers page</p>
       <?php
+
       break;
   }?>
     <form action="connexion.php" method="post" class="border shadow rounded p-5 was-validated">
@@ -91,7 +92,7 @@ if (isset($_GET['login_err'])) {
         </label>
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
-      <a href="registe.php" class="btn btn-primary">Register</a>
+      <?php if(!isset($admin)):?> <a href="registe.php" class="btn btn-primary">Register</a><?php endif;?>
     </form>
     <a href="deconnexion.php" class="btn btn-secondary">
       <- Go back</a>

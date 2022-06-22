@@ -1,16 +1,16 @@
 <?php
 class Display
 {
+
   private $bdd;
   private $permission;
 
-  public function __construct($bdd, $permission = true)
+  public function __construct($bdd)
   {
     $this->bdd = $bdd;
-    $this->permission = $permission;
   }
 
-  public function displayelement($sql, $heads, $type, $id='')
+  public function displayelement($sql, $heads, $type, $permission = true, $id = '')
   {
     switch ($type) {
       case 'query':
@@ -37,28 +37,43 @@ class Display
           ?>
         </tr>
         <?php
-
         do {
           $check = $user['ID'];
 
         ?>
           <tr class="user">
             <?php
-            for ($i = 1; $i < count($user) / 2; $i++) {
+            if ($permission) :
             ?>
-              <td><?= $user[$i]; ?></td>
+              <td> <img src="../images/avatars/<?= $user['avatar'] ?>" alt="" style="width: 80px; height: 50px"> </td>
+              <td><?= $user['Name']; ?></td>
+              <td><?= $user['Surname']; ?></td>
+              <td><?= $user['schoolName']; ?></td>
+              <td><?= $user['Email']; ?></td>
+              <td><?= $user['contact']; ?></td>
+              <td><?= $user['qualification']; ?></td>
+              <td><?= $user['address']; ?></td>
+              <td><?= $user['gender']; ?></td>
+              <td><?= $user['region']; ?></td>
+              <td><?= $user['ctyName']; ?></td>
+              <?php
+            else :
+              for ($i = 1; $i < count($user) / 2; $i++) {
+
+              ?>
+                <td><?= $user[$i]; ?></td>
             <?php
-            }
+              }
+            endif;
             ?>
-            <?php if ($this->permission) : ?>
-              <td><a type="submit" name="submit" href="userprofil.php?id=<?= $check ?>">Profile</a></td>
+            <?php if ($permission) : ?>
               <td>
-                <p class="delete" onclick="deleteft(<?= $check ?>,'<?= $user['Name'] . ' ' . $user['Surname']; ?>')" data-bs-toggle="modal" data-bs-target="#id01"><strong class="strong" title="Supprimer">&times</strong> <span class="dltxt">Delete</span></p>
+                <p class="delete" onclick="deleteft(<?= $check ?>, '<?= $user['Name'] . ' ' . $user['Surname']; ?>')" data-bs-toggle="modal" data-bs-target="#id01"><strong class="strong" title="Supprimer">&times</strong> <span class="dltxt">Delete</span></p>
               </td>
           </tr>
         <?php endif; ?>
       <?php
-        } while ($user = $utilisateur->fetch())
+        } while ($user = $utilisateur->fetch());
       ?>
       </table>
     </div>
@@ -74,7 +89,6 @@ class Display
         <div class="container">
           <h4>DELETE TEACHER ACCOUNT</h4>
           <p>Do you really want DELETE <span id="nom"></span> ?</p>
-
           <div class="clearfix">
             <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn" data-bs-dismiss="modal">Cancel</button>
             <button type="submit" name="delete" class="deletebtn">Delete</button>

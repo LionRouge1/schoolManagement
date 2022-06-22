@@ -1,0 +1,20 @@
+.active {
+	height: 47px;
+}
+
+.active > a {
+	color: rgb(4, 4, 17) !important;
+}
+
+p > div {
+	background: rgba(255, 255, 255, 0.774);
+	position: absolute;
+	z-index: 1;
+}
+
+.form-control{
+	border: navajowhite;
+}
+div > input {
+	border: none !important;
+}

@@ -98,8 +98,8 @@ function showBlock(e) {
 links.forEach((element) => {
   element.addEventListener('click', (e) => {
     showBlock(element.id);
-    const current = document.getElementsByClassName('active');
-    current[0].className = current[0].className.replace(' active', '');
+    const [current] = document.getElementsByClassName('active');
+    current.className = current.className.replace(' active', '');
     e.target.className += ' active';
   });
 });

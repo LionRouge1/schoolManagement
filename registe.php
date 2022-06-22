@@ -110,14 +110,24 @@ switch ($who) {
     <div class="champ">Contact Information:
       <p class="autocomplete required"><input id="myInput" type="text" name="region" placeholder="Region of Residence..."></p>
       <p class="required"><input type="text" name="city" placeholder="City..."> </p>
-      <p class="required"><input placeholder="Email Address..." type="email" name="email" oninput="this.className = ''"></p>
-      <p class="required"><input placeholder="Phone Number..." name="contact" oninput="this.className = ''"></p>
+      <p class="required"><input placeholder="Home Address..." type="text" name="address" oninput="this.className = ''"></p>
+      <p class="required"><input placeholder="Phone Number..." id="contact" name="contact" oninput="this.className = ''" ></p>
     </div>
 
     <div class="champ">Qualification & Status:
       <?php if ($who == 'teachers') :
       ?>
         <p class="autocomplete required"><input type="text" placeholder="Subject..." name="subject" id="subject" oninput="this.className = ''"></p>
+        <p class="required">
+        <select name="qualification" id="">
+          <option value="">Select qualification</option>
+          <option value="certificate">Certificate</option>
+          <option value="diploma">Diploma</option>
+          <option value="degree">Degree</option>
+          <option value="masters">Masters</option>
+          <option value="phd">Phd</option>
+        </select>
+      </p>
       <?php
       else :
       ?>
@@ -127,14 +137,13 @@ switch ($who) {
           <option value="">Select field__</option>
           <option value="1">GENERAL ARTS</option>
           <option value="2">TECHNICAL</option>
-          <option value="3">GENERAL</option>
           <option value="4">GENERAL SCIENCE</option>
           <option value="5">BUSINESS</option>
           <option value="6">VISUAL ARTS</option>
         </select> </p>
       <?php
       endif ?>
-      <p class="required"><input type="text" name="qualification" placeholder="qualification..."> </p>
+
       <p class="required">
       <h5>Gender</h5>
       <input type="radio" name="gender" value="M">Male
@@ -142,7 +151,7 @@ switch ($who) {
     </div>
 
     <div class="champ">Login Information:
-      <p class="required"><input placeholder="Home Address..." type="text" name="address" oninput="this.className = ''"></p>
+      <p class="required"><input placeholder="Email Address..." type="email" name="email" oninput="this.className = ''"></p>
       <p class="required"><input placeholder="Password..." type="password" name="pwd" oninput="this.className = ''"></p>
       <p class="required"><input placeholder="Confirm Password..." type="password" name="confirmpwd" oninput="this.className = ''"></p>
     </div>
